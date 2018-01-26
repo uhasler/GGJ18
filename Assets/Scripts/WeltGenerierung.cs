@@ -8,6 +8,11 @@ public class WeltGenerierung : MonoBehaviour {
     public int x = 10, y = 10;
     public int mineMax = 10;
     public Texture2D bild;
+    public Texture2D bild1;
+    public Texture2D bild2;
+    public Texture2D bild3;
+    public Texture2D bild4;
+
     public GameObject[,] spielfeld;
     public Material materi;
 	// Use this for initialization
