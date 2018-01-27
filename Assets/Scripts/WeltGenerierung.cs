@@ -29,23 +29,36 @@ public class WeltGenerierung : MonoBehaviour {
         //Weltgenerierung
         spielfeld = new GameObject[x,y];
         // Camera camera = GetComponent<Camera>();
+
+        //Zufallsgenerator
         int[] mines = new int[mineMax];
         int k = 0;
-        while (mines.Length < mineMax)
+        bool different=true;
+        while (k <= mineMax)
         {
+            different = true;
             Random random = new Random();
-            int randomNumber = Random.Range(1, x*y);
+            int randomNumber = Random.Range(0, x*y-1);
  
-            for(int l=0; l<=mines.Length; l++)
+            for(int i=0; i<k; i++)
             {
-                if (randomNumber == mines[l])
+                if (randomNumber == mines[i])
                 {
-
+                    different = false;
                 }
             }
-            mines[k] = randomNumber;
+
+            if (different)
+            {
+                mines[k] = randomNumber;
+                k++;
+            }
+            
         }
-      
+
+        //
+
+
         for (int i=0; i < x; i++)
         {
             for(int j = 0; j < y; j++)
@@ -78,6 +91,11 @@ public class WeltGenerierung : MonoBehaviour {
                 spielfeld[i, j] = cube;
 
             }
+        }
+        k = 0;
+        while ( k < mines.Length){
+            spielfeld[k % x, k / y].GetComponent<Feldwerte>().ismine = true;
+            k++;
         }
         
 	}
