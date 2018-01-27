@@ -20,6 +20,8 @@ public class Feldwerte : MonoBehaviour {
   public  Texture2D bild8;
    public int x, y;
     public GameObject parrent;
+    public GameObject self;
+
 
     
 	// Use this for initialization
@@ -49,7 +51,7 @@ public class Feldwerte : MonoBehaviour {
             {
                 GetComponent<MeshRenderer>().material.mainTexture = bildm;
                 GameObject[,] exit = parrent.GetComponent<WeltGenerierung>().spielfeld;
-
+                //self.GetComponent<Transform>().localScale = new Vector3(100, 100, 1);
             }
             else if(!ismine&&!isflagged)
             {

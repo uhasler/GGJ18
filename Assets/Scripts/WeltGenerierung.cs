@@ -94,6 +94,7 @@ public class WeltGenerierung : MonoBehaviour {
                 cube.GetComponent<Feldwerte>().bildnf = bildnf;
                 cube.GetComponent<Feldwerte>().bildm = bildm;
                 cube.GetComponent<Feldwerte>().parrent = starterr;
+                cube.GetComponent<Feldwerte>().self = cube;
 
 
                 cube.transform.position = new Vector3((float)(i * 15) + 7.5f - x * 7.5f, (float)(j * 15) + 7.5f - y * 7.5f, 0);
