@@ -22,27 +22,34 @@ public class WeltGenerierung : MonoBehaviour {
     public Texture2D bildnf;
     public Texture2D bildm;
     public GameObject starterr;
+    public GameObject cam;
+    public GameObject background;
 
 
     public GameObject[,] spielfeld;
     public Material materi;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         //Weltgenerierung
-        spielfeld = new GameObject[x,y];
+        spielfeld = new GameObject[x, y];
         // Camera camera = GetComponent<Camera>();
 
+        cam.GetComponent<Camera>().orthographicSize = x *13;
+        background.GetComponent<Transform>().localScale = new Vector3(x * 26 * 16 / 9, x * 26 , 1);
+        background.GetComponent<Transform>().position = new Vector3(0, 0, 0);
         //Zufallsgenerator
         int[] mines = new int[mineMax];
         int k = 0;
-        bool different=true;
-        while (k <= mineMax)
+        System.Random random = new System.Random();
+        bool different = true;
+        while (k < mineMax)
         {
             different = true;
-            Random random = new Random();
-            int randomNumber = Random.Range(0, x*y-1);
- 
-            for(int i=0; i<k; i++)
+            
+            int randomNumber = random.Next(0, x * y );
+
+            for (int i = 0; i < k; i++)
             {
                 if (randomNumber == mines[i])
                 {
@@ -55,21 +62,21 @@ public class WeltGenerierung : MonoBehaviour {
                 mines[k] = randomNumber;
                 k++;
             }
-            
+
         }
 
         //
 
 
-        for (int i=0; i < x; i++)
+        for (int i = 0; i < x; i++)
         {
-            for(int j = 0; j < y; j++)
+            for (int j = 0; j < y; j++)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 cube.AddComponent<Feldwerte>();
                 cube.AddComponent<GUIText>();
                 //cube.GetComponent<Renderer>().material.mainTexture=bild;
-                cube.GetComponent<MeshRenderer>().material=materi;
+                cube.GetComponent<MeshRenderer>().material = materi;
                 materi.mainTexture = bild;
                 cube.transform.localScale = new Vector3(15, 15, 1);
                 cube.GetComponent<Feldwerte>().x = i;
@@ -89,26 +96,35 @@ public class WeltGenerierung : MonoBehaviour {
                 cube.GetComponent<Feldwerte>().parrent = starterr;
 
 
-                cube.transform.position = new Vector3((float)(i * 15)+7.5f-x*7.5f,(float)(j*15)+7.5f-y*7.5f,0);
+                cube.transform.position = new Vector3((float)(i * 15) + 7.5f - x * 7.5f, (float)(j * 15) + 7.5f - y * 7.5f, 0);
                 //cube.
                 spielfeld[i, j] = cube;
 
             }
         }
         k = 0;
-        while ( k < mines.Length){
-            spielfeld[k % x, k / y].GetComponent<Feldwerte>().ismine = true;
+        while (k < mines.Length)
+        {
+            spielfeld[mines[k] % x, mines[k] / y].GetComponent<Feldwerte>().ismine = true;
             k++;
         }
-        
-	}
-    
-    
-     
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                spielfeld[i, j].GetComponent<Feldwerte>().nachbarn = NachbarnErmitteln(i, j);
+            }
+        }
+
+
+
+
+
+    }
     public void NachbarnAufdecken(int xp, int yp)
     {
     int nach=0;
-        if (xp - 1 >= 0)
+        if (xp - 1 >= 0&& !spielfeld[xp-1, yp].GetComponent<Feldwerte>().isflagged)
         {
             nach = spielfeld[xp - 1, yp].GetComponent<Feldwerte>().nachbarn;
             if (nach == 0)
@@ -148,7 +164,7 @@ public class WeltGenerierung : MonoBehaviour {
                 spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild8;
             }
         }
-        if (xp + 1 < x)
+        if (xp + 1 < x&&!spielfeld[xp +1, yp].GetComponent<Feldwerte>().isflagged)
         {
            nach= spielfeld[xp + 1, yp].GetComponent<Feldwerte>().nachbarn;
             if (nach == 0)
@@ -188,7 +204,7 @@ public class WeltGenerierung : MonoBehaviour {
                 spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild8;
             }
         }
-        if (yp - 1 >= 0)
+        if (yp - 1 >= 0&&!spielfeld[xp , yp- 1].GetComponent<Feldwerte>().isflagged)
         {
            nach= spielfeld[xp, yp - 1].GetComponent<Feldwerte>().nachbarn;
             if (nach == 0)
@@ -228,7 +244,7 @@ public class WeltGenerierung : MonoBehaviour {
                 spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild8;
             }
         }
-        if (yp + 1 < y)
+        if (yp + 1 < y&&!spielfeld[xp , yp+ 1].GetComponent<Feldwerte>().isflagged)
         {
             nach=spielfeld[xp, yp + 1].GetComponent<Feldwerte>().nachbarn;
             if (nach == 0)
@@ -282,7 +298,7 @@ public class WeltGenerierung : MonoBehaviour {
                     ret++;
                 }
             }
-            if (xp + 1 <= x)
+            if (xp + 1 < x)
             {
                 if (spielfeld[xp + 1, yp].GetComponent<Feldwerte>().ismine)
                 {
@@ -296,7 +312,7 @@ public class WeltGenerierung : MonoBehaviour {
                     ret++;
                 }
             }
-            if (yp + 1 <= y)
+            if (yp + 1 < y)
             {
                 if (spielfeld[xp , yp+1].GetComponent<Feldwerte>().ismine)
                 {
@@ -310,21 +326,21 @@ public class WeltGenerierung : MonoBehaviour {
                     ret++;
                 }
             }
-            if (xp + 1 <= x&& yp + 1 >= y)
+            if (xp + 1 < x&& yp + 1 < y)
             {
                 if (spielfeld[xp + 1, yp+1].GetComponent<Feldwerte>().ismine)
                 {
                     ret++;
                 }
             }
-            if (yp - 1 >= 0&& xp + 1 <= x)
+            if (yp - 1 >= 0&& xp + 1 < x)
             {
                 if (spielfeld[xp+1, yp - 1].GetComponent<Feldwerte>().ismine)
                 {
                     ret++;
                 }
             }
-            if (yp + 1 <= y&& xp - 1 >= 0)
+            if (yp + 1 < y&& xp - 1 >= 0)
             {
                 if (spielfeld[xp-1, yp + 1].GetComponent<Feldwerte>().ismine)
                 {
