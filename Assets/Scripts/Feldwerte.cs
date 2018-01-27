@@ -48,9 +48,10 @@ public class Feldwerte : MonoBehaviour {
             if (ismine&&!isflagged)
             {
                 GetComponent<MeshRenderer>().material.mainTexture = bildm;
+                GameObject[,] exit = parrent.GetComponent<WeltGenerierung>().spielfeld;
 
             }
-            else if(!ismine)
+            else if(!ismine&&!isflagged)
             {
                 switch (nachbarn)
                 {

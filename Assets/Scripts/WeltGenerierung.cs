@@ -130,7 +130,7 @@ public class WeltGenerierung : MonoBehaviour {
                 spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild8;
             }
         }
-        if (xp + 1 <= x)
+        if (xp + 1 < x)
         {
            nach= spielfeld[xp + 1, yp].GetComponent<Feldwerte>().nachbarn;
             if (nach == 0)
@@ -210,7 +210,7 @@ public class WeltGenerierung : MonoBehaviour {
                 spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild8;
             }
         }
-        if (yp + 1 <= y)
+        if (yp + 1 < y)
         {
             nach=spielfeld[xp, yp + 1].GetComponent<Feldwerte>().nachbarn;
             if (nach == 0)
