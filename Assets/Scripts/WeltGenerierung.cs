@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class WeltGenerierung : MonoBehaviour {
 
 
@@ -27,7 +28,23 @@ public class WeltGenerierung : MonoBehaviour {
 	void Start () {
         //Weltgenerierung
         spielfeld = new GameObject[x,y];
-       // Camera camera = GetComponent<Camera>();
+        // Camera camera = GetComponent<Camera>();
+        int[] mines = new int[mineMax];
+        int k = 0;
+        while (mines.Length < mineMax)
+        {
+            Random random = new Random();
+            int randomNumber = Random.Range(1, x*y);
+ 
+            for(int l=0; l<=mines.Length; l++)
+            {
+                if (randomNumber == mines[l])
+                {
+
+                }
+            }
+            mines[k] = randomNumber;
+        }
       
         for (int i=0; i < x; i++)
         {

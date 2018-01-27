@@ -156,7 +156,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 200
+  orthographic size: 100
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -349,7 +349,7 @@ MonoBehaviour:
   x: 10
   y: 10
   mineMax: 10
-  bild: {fileID: 2800000, guid: 0c7f71e18e62ef042b2f392b9760b368, type: 3}
+  bild: {fileID: 2800000, guid: 71f90790aac209944a2fa2b58c5e98e9, type: 3}
   bild1: {fileID: 0}
   bild2: {fileID: 0}
   bild3: {fileID: 0}
