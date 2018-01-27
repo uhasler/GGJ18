@@ -35,8 +35,8 @@ public class WeltGenerierung : MonoBehaviour {
         spielfeld = new GameObject[x, y];
         // Camera camera = GetComponent<Camera>();
 
-        cam.GetComponent<Camera>().orthographicSize = x *13;
-        background.GetComponent<Transform>().localScale = new Vector3(x * 26 * 16 / 9, x * 26 , 1);
+        cam.GetComponent<Camera>().orthographicSize = (x+y*0.8f)/2*15;
+        background.GetComponent<Transform>().localScale = new Vector3((float)(x+y)/2 * 30f * 16f / 9f, (float)(x+y)/2 * 30 , 1);
         background.GetComponent<Transform>().position = new Vector3(0, 0, 0);
         //Zufallsgenerator
         int[] mines = new int[mineMax];
@@ -105,7 +105,7 @@ public class WeltGenerierung : MonoBehaviour {
         k = 0;
         while (k < mines.Length)
         {
-            spielfeld[mines[k] % x, mines[k] / y].GetComponent<Feldwerte>().ismine = true;
+            spielfeld[mines[k] % x, mines[k] / x].GetComponent<Feldwerte>().ismine = true;
             k++;
         }
         for (int i = 0; i < x; i++)
