@@ -42,7 +42,18 @@ public class WeltGenerierung : MonoBehaviour {
                 cube.transform.localScale = new Vector3(15, 15, 1);
                 cube.GetComponent<Feldwerte>().x = i;
                 cube.GetComponent<Feldwerte>().y = j;
-
+                cube.GetComponent<Feldwerte>().bild0 = bild0;
+                cube.GetComponent<Feldwerte>().bild1 = bild1;
+                cube.GetComponent<Feldwerte>().bild2 = bild2;
+                cube.GetComponent<Feldwerte>().bild3 = bild3;
+                cube.GetComponent<Feldwerte>().bild4 = bild4;
+                cube.GetComponent<Feldwerte>().bild5 = bild5;
+                cube.GetComponent<Feldwerte>().bild6 = bild6;
+                cube.GetComponent<Feldwerte>().bild7 = bild8;
+                cube.GetComponent<Feldwerte>().bild8 = bild7;
+                cube.GetComponent<Feldwerte>().bildf = bildflagged;
+                cube.GetComponent<Feldwerte>().bildnf = bildnf;
+                cube.GetComponent<Feldwerte>().bildm = bildm;
 
 
                 cube.transform.position = new Vector3((float)(i * 15)+7.5f-x*7.5f,(float)(j*15)+7.5f-y*7.5f,0);
@@ -56,25 +67,170 @@ public class WeltGenerierung : MonoBehaviour {
     
     
      
-    /*void NachbarnAufdecken(int xp, int yp)
+    public void NachbarnAufdecken(int xp, int yp)
     {
+    int nach=0;
         if (xp - 1 >= 0)
         {
-            spielfeld[xp - 1, yp].GetComponent<Feldwerte>().nachbarn;
+            nach = spielfeld[xp - 1, yp].GetComponent<Feldwerte>().nachbarn;
+            if (nach == 0)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild0;
+            }
+            else if (nach == 1)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild1;
+            }
+            else if (nach == 2)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild2;
+            }
+            else if (nach == 3)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild3;
+            }
+            else if (nach ==4)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild4;
+            }
+            else if (nach == 5)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild5;
+            }
+            else if (nach == 6)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild6;
+            }
+            else if (nach == 7)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild7;
+            }
+            else if (nach == 8)
+            {
+                spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild8;
+            }
         }
         if (xp + 1 <= x)
         {
-            spielfeld[xp + 1, yp].GetComponent<Feldwerte>().nachbarn;
+           nach= spielfeld[xp + 1, yp].GetComponent<Feldwerte>().nachbarn;
+            if (nach == 0)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild0;
+            }
+            else if (nach == 1)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild1;
+            }
+            else if (nach == 2)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild2;
+            }
+            else if (nach == 3)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild3;
+            }
+            else if (nach == 4)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild4;
+            }
+            else if (nach == 5)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild5;
+            }
+            else if (nach == 6)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild6;
+            }
+            else if (nach == 7)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild7;
+            }
+            else if (nach == 8)
+            {
+                spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild8;
+            }
         }
         if (yp - 1 >= 0)
         {
-            spielfeld[xp, yp - 1].GetComponent<Feldwerte>().nachbarn;
+           nach= spielfeld[xp, yp - 1].GetComponent<Feldwerte>().nachbarn;
+            if (nach == 0)
+            {
+                spielfeld[xp , yp- 1].GetComponent<MeshRenderer>().material.mainTexture = bild0;
+            }
+            else if (nach == 1)
+            {
+                spielfeld[xp , yp- 1].GetComponent<MeshRenderer>().material.mainTexture = bild1;
+            }
+            else if (nach == 2)
+            {
+                spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild2;
+            }
+            else if (nach == 3)
+            {
+                spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild3;
+            }
+            else if (nach == 4)
+            {
+                spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild4;
+            }
+            else if (nach == 5)
+            {
+                spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild5;
+            }
+            else if (nach == 6)
+            {
+                spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild6;
+            }
+            else if (nach == 7)
+            {
+                spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild7;
+            }
+            else if (nach == 8)
+            {
+                spielfeld[xp, yp - 1].GetComponent<MeshRenderer>().material.mainTexture = bild8;
+            }
         }
         if (yp + 1 <= y)
         {
-            spielfeld[xp, yp + 1].GetComponent<Feldwerte>().nachbarn;
+            nach=spielfeld[xp, yp + 1].GetComponent<Feldwerte>().nachbarn;
+            if (nach == 0)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild0;
+            }
+            else if (nach == 1)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild1;
+            }
+            else if (nach == 2)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild2;
+            }
+            else if (nach == 3)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild3;
+            }
+            else if (nach == 4)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild4;
+            }
+            else if (nach == 5)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild5;
+            }
+            else if (nach == 6)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild6;
+            }
+            else if (nach == 7)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild7;
+            }
+            else if (nach == 8)
+            {
+                spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild8;
+            }
         }
-    }*/
+    }
     public int NachbarnErmitteln(int xp, int yp)
     {
         int ret = 0;

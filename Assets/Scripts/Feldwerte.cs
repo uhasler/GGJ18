@@ -6,18 +6,18 @@ public class Feldwerte : MonoBehaviour {
   public  bool ismine=false;
   public  bool isflagged = false;
   public  int nachbarn = 0;
-    Texture2D bildf;
-    Texture2D bildnf;
-    Texture2D bildm;
-    Texture2D bild0;
-    Texture2D bild1;
-    Texture2D bild2;
-    Texture2D bild3;
-    Texture2D bild4;
-    Texture2D bild5;
-    Texture2D bild6;
-    Texture2D bild7;
-    Texture2D bild8;
+  public Texture2D bildf;
+  public  Texture2D bildnf;
+  public  Texture2D bildm;
+  public  Texture2D bild0;
+  public  Texture2D bild1;
+  public  Texture2D bild2;
+  public  Texture2D bild3;
+  public  Texture2D bild4;
+  public  Texture2D bild5;
+  public  Texture2D bild6;
+  public  Texture2D bild7;
+  public  Texture2D bild8;
    public int x, y;
 
     
