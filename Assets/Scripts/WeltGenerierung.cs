@@ -20,6 +20,8 @@ public class WeltGenerierung : MonoBehaviour {
     public Texture2D bild0;
     public Texture2D bildnf;
     public Texture2D bildm;
+    public GameObject starterr;
+
 
     public GameObject[,] spielfeld;
     public Material materi;
@@ -54,6 +56,7 @@ public class WeltGenerierung : MonoBehaviour {
                 cube.GetComponent<Feldwerte>().bildf = bildflagged;
                 cube.GetComponent<Feldwerte>().bildnf = bildnf;
                 cube.GetComponent<Feldwerte>().bildm = bildm;
+                cube.GetComponent<Feldwerte>().parrent = starterr;
 
 
                 cube.transform.position = new Vector3((float)(i * 15)+7.5f-x*7.5f,(float)(j*15)+7.5f-y*7.5f,0);
