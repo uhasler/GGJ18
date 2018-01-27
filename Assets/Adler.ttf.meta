@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 46ff5ffff155a2d4592e7e09a44355a7
-timeCreated: 1517049987
+guid: 9f67bb5f9f0a3e145b9dcad91f1ed58c
+timeCreated: 1517072168
 licenseType: Free
 TrueTypeFontImporter:
   externalObjects: {}
@@ -10,9 +10,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Yesteryear
+  fontName: Adler
   fontNames:
-  - Yesteryear
+  - Adler
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
