@@ -11,6 +11,7 @@ public class WeltGenerierung : MonoBehaviour {
     public int mineMax = 10;
     public Texture2D bild;
     public bool isminekolide=false;
+    bool zuen = false;
     public Texture2D bildflagged;
     public bool gamerun = true;
     public bool gamewon = false;
@@ -26,13 +27,14 @@ public class WeltGenerierung : MonoBehaviour {
     public Texture2D bild0;
     public Texture2D bildnf;
     public Texture2D bildm;
+    float direkt = 4;//hiflezur bewegung
     public GameObject starterr;
     public GameObject cam;
     public GameObject background;
     public GameObject peter;
     public Texture2D pet1, pet2, pet3, pet4;
     private int icount = 0;
-    public Text minest, sek;
+    public Text minest, sek, win;
     public int zeit=0, anz=0, zeits=0;
 
     public GameObject[,] spielfeld;
@@ -382,12 +384,12 @@ public class WeltGenerierung : MonoBehaviour {
         int end = 0;
         int sin = 0;
         zeit++;
-        if (zeit == 59)
+        /*if (zeit == 59)
         {
             zeit = 0;
             zeits++;
             sek.text = zeits.ToString();
-        }
+        }*/
         
         for (int i = 0; i < x; i++)
         {
@@ -409,11 +411,18 @@ public class WeltGenerierung : MonoBehaviour {
         {
             peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
             gamewon = true;
+            win.text = "You Won the Game in " + zeits.ToString() + "s";
         }
         icount = ++icount % 60;
         icount++;
         if (!isminekolide)
         {
+            if (zeit == 59)
+            {
+                zeit = 0;
+                zeits++;
+                sek.text = zeits.ToString();
+            }
             if (peter.GetComponent<Transform>().position.y < soll.y)
             {
                 peter.GetComponent<Transform>().position += new Vector3(0, 1, 0);
@@ -425,25 +434,32 @@ public class WeltGenerierung : MonoBehaviour {
         }
         if (isminekolide)
         {
-            if (peter.GetComponent<Transform>().position.y < soll.y)
+            if (peter.GetComponent<Transform>().position.y < soll.y&&!zuen)
             {
                 peter.GetComponent<Transform>().position += new Vector3(0, 1, 0);
             }
-            if (peter.GetComponent<Transform>().position.x < soll.x)
+            if (peter.GetComponent<Transform>().position.x < soll.x&& !zuen)
             {
                 peter.GetComponent<Transform>().position += new Vector3(1, 0, 0);
             }
-            if (peter.GetComponent<Transform>().position.y > soll.y)
+            if (peter.GetComponent<Transform>().position.y > soll.y && !zuen)
             {
                 peter.GetComponent<Transform>().position += new Vector3(0, -1, 0);
             }
-            if (peter.GetComponent<Transform>().position.x > soll.x)
+            if (peter.GetComponent<Transform>().position.x > soll.x && !zuen)
             {
                 peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
             }
             if(peter.GetComponent<Transform>().position.x == soll.x&&peter.GetComponent<Transform>().position.y == soll.y)
             {
-                //end durch minenexplosion
+                zuen = true;
+                win.text = "You Lost the Game with "+(mineMax-end).ToString()+" Mines left";
+            }
+            if (zuen)
+            {
+                peter.GetComponent<Transform>().position += new Vector3(3f, (-1f)*direkt, 0);
+                peter.GetComponent<Transform>().localScale += new Vector3(0.2f, 0.2f, 0);
+                direkt=direkt-0.1f;
             }
         }
         if (icount < 15)
