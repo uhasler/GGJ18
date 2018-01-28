@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class WeltGenerierung : MonoBehaviour {
@@ -12,6 +13,7 @@ public class WeltGenerierung : MonoBehaviour {
     public bool isminekolide=false;
     public Texture2D bildflagged;
     public bool gamerun = true;
+    public bool gamewon = false;
     public Texture2D bild2;
     public Vector3 soll;
     public Texture2D bild3;
@@ -30,6 +32,8 @@ public class WeltGenerierung : MonoBehaviour {
     public GameObject peter;
     public Texture2D pet1, pet2, pet3, pet4;
     private int icount = 0;
+    public Text minest, sek;
+    public int zeit=0, anz=0, zeits=0;
 
     public GameObject[,] spielfeld;
     public Material materi;
@@ -376,6 +380,15 @@ public class WeltGenerierung : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         int end = 0;
+        int sin = 0;
+        zeit++;
+        if (zeit == 59)
+        {
+            zeit = 0;
+            zeits++;
+            sek.text = zeits.ToString();
+        }
+        
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
@@ -383,12 +396,19 @@ public class WeltGenerierung : MonoBehaviour {
                 if(spielfeld[i, j].GetComponent<Feldwerte>().ismine && spielfeld[i, j].GetComponent<Feldwerte>().isflagged)
                 {
                     end++;
+
+                }
+                if(spielfeld[i, j].GetComponent<Feldwerte>().isflagged)
+                {
+                    sin++;
                 }
             }
         }
-        if (end == mineMax)//end animation
+        minest.text = (mineMax - sin).ToString();
+        if (end == mineMax&&sin==mineMax)//end animation
         {
             peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
+            gamewon = true;
         }
         icount = ++icount % 60;
         icount++;
@@ -442,6 +462,7 @@ public class WeltGenerierung : MonoBehaviour {
         {
             peter.GetComponent<MeshRenderer>().material.mainTexture = pet4;
         }
+
 
     }
 }

@@ -37,11 +37,12 @@ public class Feldwerte : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(1))//rechts
         {
-            if (parrent.GetComponent<WeltGenerierung>().gamerun)
+            if (parrent.GetComponent<WeltGenerierung>().gamerun&& !parrent.GetComponent<WeltGenerierung>().gamewon)
             {
-                isflagged = !isflagged;
+                
                 if (!isopen)
                 {
+                    isflagged = !isflagged;
                     if (isflagged)
                     {
                         GetComponent<MeshRenderer>().material.mainTexture = bildf;
@@ -55,7 +56,7 @@ public class Feldwerte : MonoBehaviour {
         }
         if (Input.GetMouseButtonDown(0))//links
         {
-            if (parrent.GetComponent<WeltGenerierung>().gamerun)
+            if (parrent.GetComponent<WeltGenerierung>().gamerun&& !parrent.GetComponent<WeltGenerierung>().gamewon)
             {
 
                 if (ismine && !isflagged)
