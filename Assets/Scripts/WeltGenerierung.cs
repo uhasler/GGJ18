@@ -11,6 +11,7 @@ public class WeltGenerierung : MonoBehaviour {
     public Texture2D bild;
     public bool isminekolide=false;
     public Texture2D bildflagged;
+    public bool gamerun = true;
     public Texture2D bild2;
     public Vector3 soll;
     public Texture2D bild3;
@@ -86,6 +87,8 @@ public class WeltGenerierung : MonoBehaviour {
                 cube.GetComponent<Feldwerte>().x = i;
                 cube.GetComponent<Feldwerte>().y = j;
                 cube.GetComponent<Feldwerte>().ymax = y;
+
+                cube.GetComponent<Feldwerte>().xmas = x;
                 cube.GetComponent<Feldwerte>().bild0 = bild0;
                 cube.GetComponent<Feldwerte>().bild1 = bild1;
                 cube.GetComponent<Feldwerte>().bild2 = bild2;
@@ -372,7 +375,21 @@ public class WeltGenerierung : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        
+        int end = 0;
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                if(spielfeld[i, j].GetComponent<Feldwerte>().ismine && spielfeld[i, j].GetComponent<Feldwerte>().isflagged)
+                {
+                    end++;
+                }
+            }
+        }
+        if (end == mineMax)//end animation
+        {
+            peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
+        }
         icount = ++icount % 60;
         icount++;
         if (!isminekolide)
@@ -403,6 +420,10 @@ public class WeltGenerierung : MonoBehaviour {
             if (peter.GetComponent<Transform>().position.x > soll.x)
             {
                 peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
+            }
+            if(peter.GetComponent<Transform>().position.x == soll.x&&peter.GetComponent<Transform>().position.y == soll.y)
+            {
+                //end durch minenexplosion
             }
         }
         if (icount < 15)
