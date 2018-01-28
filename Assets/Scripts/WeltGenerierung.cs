@@ -9,8 +9,10 @@ public class WeltGenerierung : MonoBehaviour {
     public int x = 10, y = 10;
     public int mineMax = 10;
     public Texture2D bild;
+    public bool isminekolide=false;
     public Texture2D bildflagged;
     public Texture2D bild2;
+    public Vector3 soll;
     public Texture2D bild3;
     public Texture2D bild4;
     public Texture2D bild5;
@@ -24,7 +26,9 @@ public class WeltGenerierung : MonoBehaviour {
     public GameObject starterr;
     public GameObject cam;
     public GameObject background;
-
+    public GameObject peter;
+    public Texture2D pet1, pet2, pet3, pet4;
+    private int icount = 0;
 
     public GameObject[,] spielfeld;
     public Material materi;
@@ -43,7 +47,7 @@ public class WeltGenerierung : MonoBehaviour {
         int k = 0;
         System.Random random = new System.Random();
         bool different = true;
-        while (k < mineMax)
+        while (k < mineMax)//Maria erzeugt ein zufalls array von zahlen die zufaelligsind
         {
             different = true;
             
@@ -81,6 +85,7 @@ public class WeltGenerierung : MonoBehaviour {
                 cube.transform.localScale = new Vector3(15, 15, 1);
                 cube.GetComponent<Feldwerte>().x = i;
                 cube.GetComponent<Feldwerte>().y = j;
+                cube.GetComponent<Feldwerte>().ymax = y;
                 cube.GetComponent<Feldwerte>().bild0 = bild0;
                 cube.GetComponent<Feldwerte>().bild1 = bild1;
                 cube.GetComponent<Feldwerte>().bild2 = bild2;
@@ -95,6 +100,7 @@ public class WeltGenerierung : MonoBehaviour {
                 cube.GetComponent<Feldwerte>().bildm = bildm;
                 cube.GetComponent<Feldwerte>().parrent = starterr;
                 cube.GetComponent<Feldwerte>().self = cube;
+                cube.GetComponent<Feldwerte>().peter = peter;
 
 
                 cube.transform.position = new Vector3((float)(i * 15) + 7.5f - x * 7.5f, (float)(j * 15) + 7.5f - y * 7.5f, 0);
@@ -102,23 +108,27 @@ public class WeltGenerierung : MonoBehaviour {
                 spielfeld[i, j] = cube;
 
             }
-        }
+        }//array spielfeld erschaffen
         k = 0;
         while (k < mines.Length)
         {
             spielfeld[mines[k] % x, mines[k] / x].GetComponent<Feldwerte>().ismine = true;
             k++;
-        }
+        }//minen einsortieren
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
                 spielfeld[i, j].GetComponent<Feldwerte>().nachbarn = NachbarnErmitteln(i, j);
             }
-        }
+        }//
 
 
-
+        //peter animation setzen
+        peter.GetComponent<MeshRenderer>().material.mainTexture = pet1;
+        peter.GetComponent<Transform>().localScale = new Vector3(15, 30, 1);
+        peter.GetComponent<Transform>().localPosition = new Vector3(x / 2 * 15 +10, y/2 *15-15,0);
+        
 
 
     }
@@ -128,6 +138,7 @@ public class WeltGenerierung : MonoBehaviour {
         if (xp - 1 >= 0&& !spielfeld[xp-1, yp].GetComponent<Feldwerte>().isflagged)
         {
             nach = spielfeld[xp - 1, yp].GetComponent<Feldwerte>().nachbarn;
+            spielfeld[xp-1, yp ].GetComponent<Feldwerte>().isopen = true;
             if (nach == 0)
             {
                 spielfeld[xp - 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild0;
@@ -168,6 +179,7 @@ public class WeltGenerierung : MonoBehaviour {
         if (xp + 1 < x&&!spielfeld[xp +1, yp].GetComponent<Feldwerte>().isflagged)
         {
            nach= spielfeld[xp + 1, yp].GetComponent<Feldwerte>().nachbarn;
+            spielfeld[xp+ 1, yp ].GetComponent<Feldwerte>().isopen = true;
             if (nach == 0)
             {
                 spielfeld[xp + 1, yp].GetComponent<MeshRenderer>().material.mainTexture = bild0;
@@ -208,6 +220,7 @@ public class WeltGenerierung : MonoBehaviour {
         if (yp - 1 >= 0&&!spielfeld[xp , yp- 1].GetComponent<Feldwerte>().isflagged)
         {
            nach= spielfeld[xp, yp - 1].GetComponent<Feldwerte>().nachbarn;
+            spielfeld[xp, yp - 1].GetComponent<Feldwerte>().isopen = true;
             if (nach == 0)
             {
                 spielfeld[xp , yp- 1].GetComponent<MeshRenderer>().material.mainTexture = bild0;
@@ -248,6 +261,7 @@ public class WeltGenerierung : MonoBehaviour {
         if (yp + 1 < y&&!spielfeld[xp , yp+ 1].GetComponent<Feldwerte>().isflagged)
         {
             nach=spielfeld[xp, yp + 1].GetComponent<Feldwerte>().nachbarn;
+            spielfeld[xp, yp + 1].GetComponent<Feldwerte>().isopen=true;
             if (nach == 0)
             {
                 spielfeld[xp, yp + 1].GetComponent<MeshRenderer>().material.mainTexture = bild0;
@@ -358,6 +372,55 @@ public class WeltGenerierung : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+        
+        icount = ++icount % 60;
+        icount++;
+        if (!isminekolide)
+        {
+            if (peter.GetComponent<Transform>().position.y < soll.y)
+            {
+                peter.GetComponent<Transform>().position += new Vector3(0, 1, 0);
+            }
+            if (peter.GetComponent<Transform>().position.y > soll.y)
+            {
+                peter.GetComponent<Transform>().position += new Vector3(0, -1, 0);
+            }
+        }
+        if (isminekolide)
+        {
+            if (peter.GetComponent<Transform>().position.y < soll.y)
+            {
+                peter.GetComponent<Transform>().position += new Vector3(0, 1, 0);
+            }
+            if (peter.GetComponent<Transform>().position.x < soll.x)
+            {
+                peter.GetComponent<Transform>().position += new Vector3(1, 0, 0);
+            }
+            if (peter.GetComponent<Transform>().position.y > soll.y)
+            {
+                peter.GetComponent<Transform>().position += new Vector3(0, -1, 0);
+            }
+            if (peter.GetComponent<Transform>().position.x > soll.x)
+            {
+                peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
+            }
+        }
+        if (icount < 15)
+        {
+            peter.GetComponent<MeshRenderer>().material.mainTexture = pet1;
+        }
+        else if (icount < 30)
+        {
+            peter.GetComponent<MeshRenderer>().material.mainTexture = pet2;
+        }
+        else if (icount < 45)
+        {
+            peter.GetComponent<MeshRenderer>().material.mainTexture = pet3;
+        }
+        else if (icount < 60)
+        {
+            peter.GetComponent<MeshRenderer>().material.mainTexture = pet4;
+        }
+
+    }
 }

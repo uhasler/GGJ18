@@ -5,6 +5,7 @@ using UnityEngine;
 public class Feldwerte : MonoBehaviour {
   public  bool ismine=false;
   public  bool isflagged = false;
+    public bool isopen = false;
   public  int nachbarn = 0;
   public Texture2D bildf;
   public  Texture2D bildnf;
@@ -18,9 +19,12 @@ public class Feldwerte : MonoBehaviour {
   public  Texture2D bild6;
   public  Texture2D bild7;
   public  Texture2D bild8;
-   public int x, y;
+   public int x, y,ymax;
     public GameObject parrent;
     public GameObject self;
+    public GameObject peter;
+    public Vector3 soll;
+
 
 
     
@@ -33,14 +37,16 @@ public class Feldwerte : MonoBehaviour {
         if (Input.GetMouseButtonDown(1))//rechts
         {
             isflagged = !isflagged;
-
-            if (isflagged)
+            if (!isopen)
             {
-                GetComponent<MeshRenderer>().material.mainTexture = bildf;
-            }
-            else
-            {
-                GetComponent<MeshRenderer>().material.mainTexture = bildnf;
+                if (isflagged)
+                {
+                    GetComponent<MeshRenderer>().material.mainTexture = bildf;
+                }
+                else
+                {
+                    GetComponent<MeshRenderer>().material.mainTexture = bildnf;
+                }
             }
         }
         if (Input.GetMouseButtonDown(0))//links
@@ -49,12 +55,17 @@ public class Feldwerte : MonoBehaviour {
             
             if (ismine&&!isflagged)
             {
+                isopen = true;
                 GetComponent<MeshRenderer>().material.mainTexture = bildm;
                 GameObject[,] exit = parrent.GetComponent<WeltGenerierung>().spielfeld;
+                parrent.GetComponent<WeltGenerierung>().isminekolide = true;
                 //self.GetComponent<Transform>().localScale = new Vector3(100, 100, 1);
             }
             else if(!ismine&&!isflagged)
             {
+                isopen = true;
+                soll= new Vector3(peter.GetComponent<Transform>().position.x, (y-ymax/2)*15, 0);
+                parrent.GetComponent<WeltGenerierung>().soll = soll;
                 switch (nachbarn)
                 {
                     case 0: GetComponent<MeshRenderer>().material.mainTexture = bild0;
