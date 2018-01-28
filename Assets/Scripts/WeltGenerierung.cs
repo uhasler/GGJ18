@@ -31,7 +31,7 @@ public class WeltGenerierung : MonoBehaviour {
     public GameObject starterr;
     public GameObject cam;
     public GameObject background;
-    public GameObject peter;
+    public GameObject peter, restarter;
     public Texture2D pet1, pet2, pet3, pet4;
     private int icount = 0;
     public Text minest, sek, win;
@@ -40,7 +40,7 @@ public class WeltGenerierung : MonoBehaviour {
     public GameObject[,] spielfeld;
     public Material materi;
     // Use this for initialization
-    void Start()
+    public void Start()
     {
         //Weltgenerierung
         spielfeld = new GameObject[x, y];
@@ -383,7 +383,7 @@ public class WeltGenerierung : MonoBehaviour {
     void Update () {
         int end = 0;
         int sin = 0;
-        zeit++;
+        
         /*if (zeit == 59)
         {
             zeit = 0;
@@ -415,8 +415,9 @@ public class WeltGenerierung : MonoBehaviour {
         }
         icount = ++icount % 60;
         icount++;
-        if (!isminekolide)
+        if (!isminekolide&&!gamewon)
         {
+            zeit++;
             if (zeit == 59)
             {
                 zeit = 0;
@@ -454,12 +455,14 @@ public class WeltGenerierung : MonoBehaviour {
             {
                 zuen = true;
                 win.text = "You Lost the Game with "+(mineMax-end).ToString()+" Mines left";
+                
             }
             if (zuen)
             {
-                peter.GetComponent<Transform>().position += new Vector3(3f, (-1f)*direkt, 0);
+                peter.GetComponent<Transform>().position += new Vector3(3f, (-y/6)*direkt, 0);
                 peter.GetComponent<Transform>().localScale += new Vector3(0.2f, 0.2f, 0);
                 direkt=direkt-0.1f;
+                Start();
             }
         }
         if (icount < 15)
