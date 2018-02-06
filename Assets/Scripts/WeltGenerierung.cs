@@ -380,34 +380,34 @@ public class WeltGenerierung : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
         int end = 0;
         int sin = 0;
-        
+
         /*if (zeit == 59)
         {
             zeit = 0;
             zeits++;
             sek.text = zeits.ToString();
         }*/
-        
+
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
             {
-                if(spielfeld[i, j].GetComponent<Feldwerte>().ismine && spielfeld[i, j].GetComponent<Feldwerte>().isflagged)
+                if (spielfeld[i, j].GetComponent<Feldwerte>().ismine && spielfeld[i, j].GetComponent<Feldwerte>().isflagged)
                 {
                     end++;
 
                 }
-                if(spielfeld[i, j].GetComponent<Feldwerte>().isflagged)
+                if (spielfeld[i, j].GetComponent<Feldwerte>().isflagged)
                 {
                     sin++;
                 }
             }
         }
         minest.text = (mineMax - sin).ToString();
-        if (end == mineMax&&sin==mineMax)//end animation
+        if (end == mineMax && sin == mineMax)//end animation
         {
             peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
             gamewon = true;
@@ -415,7 +415,7 @@ public class WeltGenerierung : MonoBehaviour {
         }
         icount = ++icount % 60;
         icount++;
-        if (!isminekolide&&!gamewon)
+        if (!isminekolide && !gamewon)
         {
             zeit++;
             if (zeit == 59)
@@ -435,11 +435,11 @@ public class WeltGenerierung : MonoBehaviour {
         }
         if (isminekolide)
         {
-            if (peter.GetComponent<Transform>().position.y < soll.y&&!zuen)
+            if (peter.GetComponent<Transform>().position.y < soll.y && !zuen)
             {
                 peter.GetComponent<Transform>().position += new Vector3(0, 1, 0);
             }
-            if (peter.GetComponent<Transform>().position.x < soll.x&& !zuen)
+            if (peter.GetComponent<Transform>().position.x < soll.x && !zuen)
             {
                 peter.GetComponent<Transform>().position += new Vector3(1, 0, 0);
             }
@@ -451,20 +451,42 @@ public class WeltGenerierung : MonoBehaviour {
             {
                 peter.GetComponent<Transform>().position += new Vector3(-1, 0, 0);
             }
-            if(peter.GetComponent<Transform>().position.x == soll.x&&peter.GetComponent<Transform>().position.y == soll.y)
+            if (peter.GetComponent<Transform>().position.x == soll.x && peter.GetComponent<Transform>().position.y == soll.y)
             {
                 zuen = true;
-                win.text = "You Lost the Game with "+(mineMax-end).ToString()+" Mines left";
-                
+                win.text = "You Lost the Game with " + (mineMax - end).ToString() + " Mines left";
+
             }
             if (zuen)
             {
-                peter.GetComponent<Transform>().position += new Vector3(3f, (-y/6)*direkt, 0);
+                peter.GetComponent<Transform>().position += new Vector3(3f, (-y / 6) * direkt, 0);
                 peter.GetComponent<Transform>().localScale += new Vector3(0.2f, 0.2f, 0);
-                direkt=direkt-0.1f;
-                Start();
+                direkt = direkt - 0.1f;
+                if (direkt < -20)
+                {
+                    isminekolide = false;
+                    zuen = false;
+
+                    gamerun = true;
+                    gamewon = false;
+                    icount = 0;
+
+                    zeit = 0; anz = 0; zeits = 0;
+                    direkt = 4;
+                    win.text = "";
+                    for (int i = 0; i < x; i++)
+                    {
+                        for (int j = 0; j < y; j++)
+                        {
+                            spielfeld[i, j].GetComponent<Transform>().position += new Vector3(5000, 5000, -500);
+                        }
+                    }
+                            Start();
+                    
+
+                }
             }
-        }
+        } 
         if (icount < 15)
         {
             peter.GetComponent<MeshRenderer>().material.mainTexture = pet1;
